@@ -111,8 +111,8 @@ export default async function VersionsPage({
                                                     {version.platform === 'android' ? 'Android APK' : 'Windows EXE'}
                                                 </span>
                                             </td>
-                                            <td>{formatFileSize(version.file_size)}</td>
-                                            <td>{version.min_requirements || '-'}</td>
+                                            <td>{version.file_size ? formatFileSize(version.file_size) : '-'}</td>
+                                            <td>{version.system_requirements || '-'}</td>
                                             <td>
                                                 <span className={`status-badge ${version.is_active ? 'status-published' : 'status-draft'}`}>
                                                     {version.is_active ? 'Active' : 'Inactive'}

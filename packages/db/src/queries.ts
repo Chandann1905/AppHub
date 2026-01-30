@@ -110,6 +110,7 @@ function getMockApps(options?: { featured?: boolean; limit?: number }): AppCardD
             slug: 'superapp-pro',
             short_description: 'The ultimate productivity app for Android and Windows',
             icon_url: null,
+            category_id: '6',
             category: { name: 'Productivity', slug: 'productivity' },
             downloads_count: 125000,
             platforms: ['android', 'windows'] as Platform[]
@@ -120,6 +121,7 @@ function getMockApps(options?: { featured?: boolean; limit?: number }): AppCardD
             slug: 'gamemaster-2024',
             short_description: 'Epic gaming experience with stunning graphics',
             icon_url: null,
+            category_id: '4',
             category: { name: 'Games', slug: 'games' },
             downloads_count: 89000,
             platforms: ['android', 'windows'] as Platform[]
@@ -130,6 +132,7 @@ function getMockApps(options?: { featured?: boolean; limit?: number }): AppCardD
             slug: 'filemanager-plus',
             short_description: 'Advanced file management for all your needs',
             icon_url: null,
+            category_id: '3',
             category: { name: 'Tools', slug: 'tools' },
             downloads_count: 56000,
             platforms: ['android'] as Platform[]
@@ -140,6 +143,7 @@ function getMockApps(options?: { featured?: boolean; limit?: number }): AppCardD
             slug: 'mediaplayer-hd',
             short_description: 'Play any video format in stunning HD quality',
             icon_url: null,
+            category_id: '5',
             category: { name: 'Media', slug: 'media' },
             downloads_count: 234000,
             platforms: ['windows'] as Platform[]
@@ -150,6 +154,7 @@ function getMockApps(options?: { featured?: boolean; limit?: number }): AppCardD
             slug: 'securevault',
             short_description: 'Keep your files safe with military-grade encryption',
             icon_url: null,
+            category_id: '3',
             category: { name: 'Tools', slug: 'tools' },
             downloads_count: 45000,
             platforms: ['android', 'windows'] as Platform[]
@@ -160,6 +165,7 @@ function getMockApps(options?: { featured?: boolean; limit?: number }): AppCardD
             slug: 'photoedit-pro',
             short_description: 'Professional photo editing made easy',
             icon_url: null,
+            category_id: '5',
             category: { name: 'Media', slug: 'media' },
             downloads_count: 178000,
             platforms: ['android', 'windows'] as Platform[]

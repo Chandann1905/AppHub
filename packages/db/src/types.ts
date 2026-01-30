@@ -256,6 +256,7 @@ export interface AppCardData {
     slug: string;
     short_description: string | null;
     icon_url: string | null;
+    category_id: string | null;
     category: { name: string; slug: string } | null;
     downloads_count: number;
     platforms: Platform[];
