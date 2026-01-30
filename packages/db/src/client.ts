@@ -1,31 +1,55 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error(
-        'Missing Supabase environment variables. Please check your .env file.'
-    );
-}
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 /**
- * Supabase client for browser-side operations
- * Uses the public anon key which is safe to expose
+ * Check if Supabase is configured
  */
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
-    auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-    },
-});
+export const isSupabaseConfigured = (): boolean => {
+    return Boolean(supabaseUrl && supabaseAnonKey && supabaseUrl.startsWith('http'));
+};
+
+// Only create the client if credentials are available
+let _supabaseClient: SupabaseClient<Database> | null = null;
 
 /**
- * Server-side Supabase client (for API routes and server components)
- * Uses service role key for elevated permissions when available
+ * Get Supabase client for browser-side operations
+ * Returns null if Supabase is not configured
  */
-export const getServerSupabaseClient = () => {
+export const getSupabaseClient = (): SupabaseClient<Database> | null => {
+    if (!isSupabaseConfigured()) {
+        return null;
+    }
+
+    if (!_supabaseClient) {
+        _supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+            },
+        });
+    }
+
+    return _supabaseClient;
+};
+
+/**
+ * Supabase client singleton - use getSupabaseClient() for null-safe access
+ * This export maintains backwards compatibility but may be null
+ */
+export const supabase = getSupabaseClient() as SupabaseClient<Database>;
+
+/**
+ * Server-side Supabase client
+ * Returns null if Supabase is not configured
+ */
+export const getServerSupabaseClient = (): SupabaseClient<Database> | null => {
+    if (!isSupabaseConfigured()) {
+        return null;
+    }
+
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (serviceRoleKey) {
@@ -37,6 +61,5 @@ export const getServerSupabaseClient = () => {
         });
     }
 
-    // Fallback to anon key if service role not configured
-    return supabase;
+    return getSupabaseClient();
 };

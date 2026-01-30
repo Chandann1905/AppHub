@@ -1,10 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    swcMinify: true,
     transpilePackages: ['@apphub/db', '@apphub/config'],
-    eslint: {
-        dirs: ['app', 'src'],
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**.supabase.co',
+            },
+        ],
+    },
+    experimental: {
+        typedRoutes: false,
     },
 };
 

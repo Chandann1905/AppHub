@@ -4,13 +4,13 @@
   "private": true,
   "description": "AppHub - Web platform for app distribution and management",
   "scripts": {
-    "dev": "pnpm --filter web dev",
-    "build": "pnpm --filter web build",
-    "start": "pnpm --filter web start",
-    "lint": "pnpm --recursive lint",
+    "dev": "npm run dev -w apps/web",
+    "build": "npm run build -w apps/web",
+    "start": "npm run start -w apps/web",
+    "lint": "npm run lint -ws",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "type-check": "pnpm --recursive type-check"
+    "type-check": "npm run type-check -ws"
   },
   "keywords": [
     "apphub",
@@ -20,9 +20,13 @@
   ],
   "author": "",
   "license": "UNLICENSED",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+    "npm": ">=8.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.21.0",
