@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Header, Footer } from '../components';
+import { generateWebsiteSchema, generateOrganizationSchema } from '../lib/structured-data';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -22,6 +23,9 @@ export const metadata: Metadata = {
         index: true,
         follow: true,
     },
+    verification: {
+        google: 'YOUR_GOOGLE_VERIFICATION_CODE',
+    },
 };
 
 export default function RootLayout({
@@ -29,8 +33,25 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
+    const websiteSchema = generateWebsiteSchema();
+    const organizationSchema = generateOrganizationSchema();
+
     return (
         <html lang="en">
+            <head>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(websiteSchema),
+                    }}
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(organizationSchema),
+                    }}
+                />
+            </head>
             <body>
                 <div className="page-wrapper">
                     <Header />
