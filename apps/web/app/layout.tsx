@@ -1,7 +1,18 @@
-import type { Metadata } from 'next';
-import { Header, Footer } from '../components';
+import type { Metadata, Viewport } from 'next';
+import { NavigationBar, Footer, BottomTabBar } from '../components';
 import { generateWebsiteSchema, generateOrganizationSchema } from '../lib/structured-data';
 import './globals.css';
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    themeColor: [
+        { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
+        { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    ],
+};
 
 export const metadata: Metadata = {
     title: {
@@ -15,6 +26,11 @@ export const metadata: Metadata = {
         type: 'website',
         locale: 'en_US',
         siteName: 'AppHub',
+    },
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'default',
+        title: 'AppHub',
     },
     twitter: {
         card: 'summary_large_image',
@@ -52,13 +68,14 @@ export default function RootLayout({
                     }}
                 />
             </head>
-            <body>
-                <div className="page-wrapper">
-                    <Header />
-                    <main className="main-content">
+            <body className="antialiased">
+                <div className="ios-page">
+                    <NavigationBar />
+                    <main className="ios-container pt-4 md:pt-8 min-h-[80vh]">
                         {children}
                     </main>
                     <Footer />
+                    <BottomTabBar />
                 </div>
             </body>
         </html>

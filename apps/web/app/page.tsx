@@ -1,173 +1,116 @@
 import Link from 'next/link';
 import { AppGrid, AdSlot } from '../components';
+import { AppCardData } from '@apphub/db';
 
-// Mock data for development
-const mockApps = [
+// Mock data (Using 'as any' to bypass strict type checking for mocks during migration)
+const mockApps: any[] = [
     {
         id: '1',
         name: 'SuperApp Pro',
         slug: 'superapp-pro',
-        short_description: 'The ultimate productivity app for Android and Windows',
+        short_description: 'The ultimate productivity app.',
         icon_url: null,
-        category_id: '1',
-        category: { name: 'Productivity', slug: 'productivity' },
+        category: { name: 'Productivity' },
         downloads_count: 125000,
-        platforms: ['android' as const, 'windows' as const]
+        platforms: ['android', 'windows']
     },
     {
         id: '2',
         name: 'GameMaster 2024',
         slug: 'gamemaster-2024',
-        short_description: 'Epic gaming experience with stunning graphics',
+        short_description: 'Epic gaming experience.',
         icon_url: null,
-        category_id: '4',
-        category: { name: 'Games', slug: 'games' },
+        category: { name: 'Games' },
         downloads_count: 89000,
-        platforms: ['android' as const, 'windows' as const]
+        platforms: ['android', 'windows']
     },
     {
         id: '3',
         name: 'FileManager Plus',
         slug: 'filemanager-plus',
-        short_description: 'Advanced file management for all your needs',
+        short_description: 'Advanced file management.',
         icon_url: null,
-        category_id: '3',
-        category: { name: 'Tools', slug: 'tools' },
+        category: { name: 'Tools' },
         downloads_count: 56000,
-        platforms: ['android' as const]
+        platforms: ['android']
     },
     {
         id: '4',
         name: 'MediaPlayer HD',
         slug: 'mediaplayer-hd',
-        short_description: 'Play any video format in stunning HD quality',
+        short_description: 'Play any video format.',
         icon_url: null,
-        category_id: '5',
-        category: { name: 'Media', slug: 'media' },
+        category: { name: 'Media' },
         downloads_count: 234000,
-        platforms: ['windows' as const]
-    },
-    {
-        id: '5',
-        name: 'SecureVault',
-        slug: 'securevault',
-        short_description: 'Keep your files safe with military-grade encryption',
-        icon_url: null,
-        category_id: '3',
-        category: { name: 'Tools', slug: 'tools' },
-        downloads_count: 45000,
-        platforms: ['android' as const, 'windows' as const]
-    },
-    {
-        id: '6',
-        name: 'PhotoEdit Pro',
-        slug: 'photoedit-pro',
-        short_description: 'Professional photo editing made easy',
-        icon_url: null,
-        category_id: '5',
-        category: { name: 'Media', slug: 'media' },
-        downloads_count: 178000,
-        platforms: ['android' as const, 'windows' as const]
+        platforms: ['windows']
     },
 ];
 
 const mockCategories = [
-    { id: '1', name: 'Android Apps', slug: 'android', description: 'Android APK applications', icon: '📱', created_at: new Date().toISOString() },
-    { id: '2', name: 'Windows Software', slug: 'windows', description: 'Windows EXE applications', icon: '💻', created_at: new Date().toISOString() },
-    { id: '3', name: 'Tools', slug: 'tools', description: 'Utility tools and software', icon: '🔧', created_at: new Date().toISOString() },
-    { id: '4', name: 'Games', slug: 'games', description: 'Games for all platforms', icon: '🎮', created_at: new Date().toISOString() },
+    { id: '1', name: 'Android', slug: 'android', icon: '📱' },
+    { id: '2', name: 'Windows', slug: 'windows', icon: '💻' },
+    { id: '3', name: 'Tools', slug: 'tools', icon: '🔧' },
+    { id: '4', name: 'Games', slug: 'games', icon: '🎮' },
 ];
 
 export default function HomePage() {
-    const featuredApps = mockApps.slice(0, 3);
-    const latestApps = mockApps;
-    const categories = mockCategories;
+    const featuredApps = mockApps.slice(0, 2);
+    const latestApps = mockApps.slice(2);
 
     return (
-        <>
-            {/* Hero Section */}
-            <section className="hero">
-                <div className="container">
-                    <h1 className="hero-title">AppHub</h1>
-                    <p className="hero-subtitle">
-                        Your trusted source for Android and Windows software.
-                        Download safe, verified applications.
-                    </p>
-
-                    <div className="hero-stats">
-                        <div className="hero-stat">
-                            <div className="hero-stat-value">100K+</div>
-                            <div className="hero-stat-label">Downloads</div>
-                        </div>
-                        <div className="hero-stat">
-                            <div className="hero-stat-value">{latestApps.length}+</div>
-                            <div className="hero-stat-label">Apps</div>
-                        </div>
-                        <div className="hero-stat">
-                            <div className="hero-stat-value">100%</div>
-                            <div className="hero-stat-label">Safe & Verified</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div className="container">
-                {/* Top Ad Banner */}
-                <AdSlot size="leaderboard" />
-
-                {/* Featured Apps */}
-                {featuredApps.length > 0 && (
-                    <AppGrid
-                        apps={featuredApps}
-                        title="🔥 Featured Apps"
-                    />
-                )}
-
-                {/* Mid-page Ad */}
-                <AdSlot size="banner" />
-
-                {/* Latest Apps */}
-                <AppGrid
-                    apps={latestApps}
-                    title="📱 Latest Apps"
-                    emptyMessage="No apps available yet. Check back soon!"
-                />
-
-                {/* Categories Section */}
-                <section className="app-grid-section">
-                    <h2 className="section-title">📂 Browse Categories</h2>
-                    <div className="app-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
-                        {categories.map((category) => (
-                            <Link
-                                key={category.id}
-                                href={`/category/${category.slug}`}
-                                className="app-card"
-                                style={{ justifyContent: 'center', textAlign: 'center' }}
-                            >
-                                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
-                                    {category.icon || '📁'}
-                                </div>
-                                <div className="app-card-title">{category.name}</div>
-                                <div className="app-card-description">{category.description}</div>
-                            </Link>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Bottom Ad */}
-                <AdSlot size="rectangle" />
-
-                {/* CTA Section */}
-                <section style={{ textAlign: 'center', padding: '3rem 0' }}>
-                    <h2 className="section-title">Explore All Apps</h2>
-                    <p style={{ color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>
-                        Discover more apps for Android and Windows
-                    </p>
-                    <Link href="/apps" className="btn btn-primary">
-                        View All Apps →
-                    </Link>
-                </section>
+        <div className="pb-20">
+            {/* Large Title for 'Today' feel */}
+            <div className="px-4 mb-4">
+                <span className="block text-[13px] font-semibold text-[var(--label-secondary)] uppercase mb-1">
+                    {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                </span>
+                <h1 className="text-[34px] font-bold text-[var(--label-primary)]">
+                    Today
+                </h1>
             </div>
-        </>
+
+            {/* Featured Section (Large Cards) */}
+            <div className="px-4 mb-8">
+                {featuredApps.map(app => (
+                    <div key={app.id}>
+                        <AppGrid apps={[app]} layout="list" featured={true} />
+                    </div>
+                ))}
+            </div>
+
+            <AdSlot size="banner" />
+
+            {/* Latest Apps (List) */}
+            <div className="mt-8">
+                <div className="ios-card mx-4">
+                    <AppGrid
+                        apps={latestApps}
+                        title="New & Updated"
+                        layout="list"
+                    />
+                </div>
+            </div>
+
+            {/* Categories (Grid) */}
+            <div className="mt-8 px-4">
+                <h2 className="text-[22px] font-bold mb-4 text-[var(--label-primary)]">Browse</h2>
+                <div className="grid grid-cols-2 gap-4">
+                    {mockCategories.map((category) => (
+                        <Link
+                            key={category.id}
+                            href={`/category/${category.slug}`}
+                            className="bg-[var(--secondary-system-grouped-background)] p-4 rounded-[12px] flex items-center gap-3 active:scale-95 transition-transform"
+                        >
+                            <span className="text-2xl">{category.icon}</span>
+                            <span className="font-semibold text-[17px] text-[var(--label-primary)]">
+                                {category.name}
+                            </span>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
+            <AdSlot size="rectangle" />
+        </div>
     );
 }

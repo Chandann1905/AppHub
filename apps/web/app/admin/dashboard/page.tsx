@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getPublishedApps, getCategories } from '@apphub/db';
+import { LogoutButton } from '../../../components/admin/LogoutButton';
 
 export const metadata: Metadata = {
     title: 'Dashboard - AppHub Admin',
@@ -32,12 +33,10 @@ export default async function AdminDashboardPage() {
                     <Link href="/admin/analytics" className="admin-nav-link">Analytics</Link>
                 </nav>
                 <div className="admin-header-right">
-                    <Link href="/" className="btn btn-secondary" style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}>
+                    <Link href="/" className="btn btn-secondary mr-2" style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}>
                         View Site
                     </Link>
-                    <button className="btn btn-secondary" style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}>
-                        Logout
-                    </button>
+                    <LogoutButton />
                 </div>
             </header>
 
