@@ -68,3 +68,23 @@ We respect `env(safe-area-inset-*)` for passing notches and home indicators.
 
 - **Top:** `padding-top` on Navbar.
 - **Bottom:** `padding-bottom` on TabBar and Content Container.
+
+## 4. Visual Architecture Diagram
+
+```mermaid
+graph TD
+    Screen[Device Screen 100dvh]
+    Screen --> Shell[App Shell .ios-page]
+    Shell --> NavBar[Fixed Navbar .ios-navbar]
+    Shell --> Container[Scrollable Content .ios-container]
+    Shell --> TabBar[Fixed Bottom Bar .ios-tabbar]
+    
+    subgraph ScrollableArea
+        Container --> PageContent
+        Container --> Footer
+    end
+
+    style NavBar fill:#f9f9f9,stroke:#333 opacity:0.8
+    style TabBar fill:#f9f9f9,stroke:#333 opacity:0.8
+    style Container fill:#eef,stroke:#aaa
+```

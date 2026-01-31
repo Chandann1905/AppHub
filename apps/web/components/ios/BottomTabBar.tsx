@@ -14,7 +14,7 @@ export function BottomTabBar() {
     };
 
     return (
-        <div className="ios-tabbar md:hidden">
+        <div className="ios-tabbar">
             <TabItem
                 href="/"
                 label="Today"
