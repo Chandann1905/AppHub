@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getPublishedApps } from '@apphub/db';
-import { AppGrid, AdSlot } from '../../components';
+import { AppGrid, AdSlot } from '@/components';
 
 export const metadata: Metadata = {
     title: 'Search Apps',

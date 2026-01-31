@@ -39,12 +39,14 @@ The file `apps/web/middleware.ts` intercepts all requests to `/admin/*`.
 - **Success:** Allow request.
 - **Fail:** Redirect to `/admin/login`.
 
-## 5. Logout
+## 5. Admin Profile (`/admin/profile`)
 
-1. **POST /api/admin/logout**:
-   - Clears cookies.
-   - Signs out from Supabase.
-2. Client redirects to `/admin/login`.
+- Displays Authenticated User Info (Email, Role, Last Sign In).
+- Validates session token via `supabase.auth.getUser()`.
+- **Logout Action:**
+  - POSTs to `/api/admin/logout`.
+  - Clears cookies.
+  - Client redirects to Login.
 
 ## 6. Security Notes
 

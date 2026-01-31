@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AppGrid, AdSlot } from '../components';
+import { AppGrid, AdSlot } from '@/components';
 import { getPublishedApps, getCategories } from '@apphub/db';
 
 const CATEGORY_ICONS: Record<string, string> = {

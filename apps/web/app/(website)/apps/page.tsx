@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getPublishedApps, getCategories } from '@apphub/db';
-import { AppGrid, AdSlot } from '../../components';
+import { AppGrid, AdSlot } from '@/components';
 
 export const metadata: Metadata = {
     title: 'All Apps - Browse Software',

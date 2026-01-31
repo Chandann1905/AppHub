@@ -1,13 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import { NavigationBar, Footer, BottomTabBar } from '../components';
-import { generateWebsiteSchema, generateOrganizationSchema } from '../lib/structured-data';
+import { generateWebsiteSchema, generateOrganizationSchema } from '@/lib/structured-data';
 import './globals.css';
 
 export const viewport: Viewport = {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 1,
-    userScalable: false,
+    userScalable: false, // iOS native feel
     themeColor: [
         { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
         { media: '(prefers-color-scheme: dark)', color: '#000000' },
@@ -39,9 +38,6 @@ export const metadata: Metadata = {
         index: true,
         follow: true,
     },
-    verification: {
-        google: 'YOUR_GOOGLE_VERIFICATION_CODE',
-    },
 };
 
 export default function RootLayout({
@@ -69,14 +65,7 @@ export default function RootLayout({
                 />
             </head>
             <body className="antialiased">
-                <div className="ios-page">
-                    <NavigationBar />
-                    <main className="ios-container pt-4 md:pt-8 min-h-[80vh]">
-                        {children}
-                    </main>
-                    <Footer />
-                    <BottomTabBar />
-                </div>
+                {children}
             </body>
         </html>
     );
