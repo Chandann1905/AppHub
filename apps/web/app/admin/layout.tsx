@@ -22,8 +22,8 @@ export default function AdminLayout({
                 </div>
             </div>
 
-            {/* Main Content */}
-            <main className="ios-container pt-4 min-h-screen">
+            {/* Main Content (Scrollable) */}
+            <main className="ios-container pt-4">
                 {children}
             </main>
         </div>

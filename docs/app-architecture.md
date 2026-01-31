@@ -42,7 +42,29 @@ app/
   - Admin-specific Navigation Bar (Title: "Panel", Right: "Account").
   - Secure Context.
 
-## 3. Navigation
+## 3. Viewport & Layout Strategy (Native Feel)
 
-- **Mobile First:** Bottom Tab Bar is the primary navigation on mobile.
-- **Transitions:** Pages load inside the shell without refreshing the chrome.
+To mimic a native app, we lock the `<body>` and scroll an internal container.
+
+### Global Rules (`globals.css`)
+
+- **Body Lock:** `html, body { height: 100dvh; overflow: hidden; position: fixed; }`
+  - Prevents "bounce" of the whole page.
+  - Ensures app fits the physical screen exactly.
+- **Flex Layout:** `.ios-page { display: flex; flex-direction: column; height: 100%; }`
+- **Internal Scroll:** `.ios-container { flex: 1; overflow-y: auto; }`
+  - Only this container scrolls.
+  - Navbar and TabBar remain static/fixed.
+
+### Layers
+
+1. **Background:** `.secondary-system-background`
+2. **Content:** Scrolled behind bars.
+3. **Bars:** `z-index: 1000`. Glassmorphsim (Blur) allows content to be seen underneath.
+
+### Safe Areas
+
+We respect `env(safe-area-inset-*)` for passing notches and home indicators.
+
+- **Top:** `padding-top` on Navbar.
+- **Bottom:** `padding-bottom` on TabBar and Content Container.

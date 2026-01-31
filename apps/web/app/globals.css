@@ -58,35 +58,23 @@
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-xxl: 28px;
-
-  /* --- AppHub Specific --- */
-  --accent-color: var(--ios-blue);
   --max-width: 1100px;
-  /* Reduced for simpler reading width */
 }
 
-/* --- Dark Mode Overrides (iOS Style) --- */
 @media (prefers-color-scheme: dark) {
   :root {
-    /* iOS System Backgrounds (Dark Mode) */
     --system-background: #000000;
     --secondary-system-background: #1C1C1E;
     --tertiary-system-background: #2C2C2E;
     --system-grouped-background: #000000;
     --secondary-system-grouped-background: #1C1C1E;
     --tertiary-system-grouped-background: #2C2C2E;
-
-    /* iOS Text Colors (Dark Mode) */
     --label-primary: #FFFFFF;
     --label-secondary: rgba(235, 235, 245, 0.60);
     --label-tertiary: rgba(235, 235, 245, 0.30);
     --label-quaternary: rgba(235, 235, 245, 0.18);
-
-    /* iOS Separators (Dark Mode) */
     --separator: rgba(84, 84, 88, 0.65);
     --separator-opaque: #38383A;
-
-    /* iOS Materials (Dark Mode) */
     --material-regular: rgba(30, 30, 30, 0.75);
     --material-thick: rgba(30, 30, 30, 0.85);
     --material-thin: rgba(30, 30, 30, 0.45);
@@ -94,7 +82,7 @@
 }
 
 /* =========================================
-   RESET & TYPOGRAPHY
+   APP SHELL LAYOUT (BODY LOCK)
    ========================================= */
 
 * {
@@ -106,6 +94,9 @@ html {
   -webkit-text-size-adjust: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: 100%;
+  overflow: hidden;
+  /* Prevent html scroll */
+  touch-action: manipulation;
 }
 
 body {
@@ -116,46 +107,49 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 17px;
   line-height: 1.4;
-  overflow-x: hidden;
-  height: 100%;
+  height: 100dvh;
+  /* Dynamic Full Viewport */
+  width: 100vw;
+  overflow: hidden;
+  /* Prevent body scroll (we scroll inner container) */
+  overscroll-behavior: none;
+  position: fixed;
+  inset: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  /* Tight tracking like Apple */
-}
-
+/* Typography map */
 h1 {
   font-size: 34px;
   line-height: 41px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
 
-/* Large Title */
 h2 {
   font-size: 28px;
   line-height: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
 
-/* Title 1 */
 h3 {
   font-size: 22px;
   line-height: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
 
-/* Title 2 */
 h4 {
   font-size: 20px;
   line-height: 25px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
 
-/* Title 3 */
 p {
   margin: 0 0 16px 0;
 }
@@ -166,16 +160,21 @@ a {
   cursor: pointer;
 }
 
-/* =========================================
-   iOS UTILITY CLASSES
-   ========================================= */
+/* The App Page (Flex Column) */
+.ios-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondary-system-background);
+  overflow: hidden;
+}
 
-/* Navigation Bar (Glassmorphism) */
+/* Navbar (Top Fixed-like Element) */
 .ios-navbar {
-  position: sticky;
-  top: 0;
+  flex-shrink: 0;
+  position: relative;
   z-index: 1000;
-  height: var(--navbar-height);
   padding-top: var(--safe-area-top);
   background-color: var(--material-regular);
   backdrop-filter: blur(20px);
@@ -187,11 +186,12 @@ a {
   padding-right: 16px;
   border-bottom: 0.5px solid var(--separator);
   transition: all 0.3s ease;
+  height: calc(var(--navbar-height) + var(--safe-area-top));
 }
 
 .ios-navbar.large {
   height: auto;
-  min-height: 96px;
+  min-height: calc(96px + var(--safe-area-top));
   align-items: flex-end;
   padding-bottom: 8px;
 }
@@ -203,38 +203,37 @@ a {
   position: absolute;
   left: 0;
   right: 0;
+  bottom: 12px;
   opacity: 0;
-  /* Hidden initially for large title mode */
   transition: opacity 0.2s;
+  pointer-events: none;
 }
 
 .ios-navbar.scrolled .ios-navbar-title {
   opacity: 1;
 }
 
-/* Page Layout */
-.ios-page {
-  padding-top: calc(var(--safe-area-top) + 0px);
-  padding-bottom: calc(var(--tabbar-height) + var(--safe-area-bottom) + 20px);
-  min-height: 100vh;
-  background-color: var(--secondary-system-background);
-  /* Grouped List Look */
-}
-
+/* Scroll Container (The Main Content) */
 .ios-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  /* IMPORTANT: Add padding bottom to clear floating TabBar */
+  padding-bottom: calc(var(--tabbar-height) + var(--safe-area-bottom) + 20px);
+  width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 16px;
 }
 
-/* iOS Cards (Grouped Inset Style) */
+/* Components */
 .ios-card {
   background-color: var(--secondary-system-grouped-background);
   border-radius: var(--radius-sm);
   overflow: hidden;
   margin-bottom: 16px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  /* Very subtle shadow */
 }
 
 @media (min-width: 768px) {
@@ -243,7 +242,6 @@ a {
   }
 }
 
-/* iOS List Items */
 .ios-list-item {
   display: flex;
   align-items: center;
@@ -261,8 +259,6 @@ a {
   border-bottom: none;
 }
 
-/* iOS Button (and Legacy Compatibility) */
-.ios-btn,
 .btn {
   display: inline-flex;
   align-items: center;
@@ -272,48 +268,26 @@ a {
   border-radius: var(--radius-lg);
   padding: 12px 24px;
   min-height: 44px;
-  /* Apple minimum touch target */
-  transition: opacity 0.2s, transform 0.1s;
   border: none;
   cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
 }
 
-.ios-btn:active,
 .btn:active {
   opacity: 0.7;
   transform: scale(0.98);
 }
 
-.ios-btn-primary,
 .btn-primary {
   background-color: var(--ios-blue);
   color: white;
 }
 
-.ios-btn-secondary,
 .btn-secondary {
   background-color: var(--secondary-system-background);
   color: var(--ios-blue);
 }
 
-.ios-btn-plain {
-  background: transparent;
-  color: var(--ios-blue);
-  padding: 8px 16px;
-}
-
-.ios-btn-get {
-  background-color: var(--secondary-system-background);
-  color: var(--ios-blue);
-  font-weight: 700;
-  font-size: 15px;
-  border-radius: 20px;
-  padding: 4px 18px;
-  min-height: 28px;
-  text-transform: uppercase;
-}
-
-/* iOS Tab Bar */
 .ios-tabbar {
   position: fixed;
   bottom: 0;
@@ -346,89 +320,7 @@ a {
   color: var(--ios-blue);
 }
 
-.ios-tab-icon {
-  font-size: 24px;
-  margin-bottom: -2px;
-}
-
-/* Apple-style Search Bar */
-.ios-search-container {
-  background-color: var(--material-regular);
-  padding: 8px 16px;
-  backdrop-filter: blur(20px);
-  position: sticky;
-  top: var(--navbar-height);
-  z-index: 999;
-}
-
-.ios-search-input {
-  width: 100%;
-  height: 36px;
-  background-color: rgba(118, 118, 128, 0.12);
-  border-radius: 10px;
-  border: none;
-  padding: 0 36px;
-  font-size: 17px;
-  color: var(--label-primary);
-  outline: none;
-}
-
-.ios-search-input::placeholder {
-  color: var(--label-secondary);
-}
-
-/* Grid Layouts */
-.ios-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  /* Typical mobile card width */
-  gap: 16px;
-  padding: 16px;
-}
-
-@media (min-width: 768px) {
-  .ios-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  }
-}
-
-/* App Icon Style */
-.ios-app-icon {
-  border-radius: 22%;
-  /* Using CSS rounded rect approximation for iOS squircle */
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  position: relative;
-}
-
-.ios-app-icon::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 22%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-}
-
-/* Animations */
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-
-/* =========================================
-   ADMIN / TABLE STYLES (iOS List Style)
-   ========================================= */
-
+/* Admin Table */
 .admin-table-container {
   overflow-x: auto;
   border-radius: var(--radius-md);
@@ -464,53 +356,4 @@ a {
 
 .admin-table tr:last-child td {
   border-bottom: none;
-}
-
-/* Status Badges */
-.status-badge {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  display: inline-block;
-}
-
-.status-published {
-  background-color: rgba(52, 199, 89, 0.15);
-  color: var(--ios-green);
-}
-
-.status-draft {
-  background-color: rgba(142, 142, 147, 0.15);
-  color: var(--ios-gray);
-}
-
-.status-archived {
-  background-color: rgba(255, 149, 0, 0.15);
-  color: var(--ios-orange);
-}
-
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  gap: 12px;
-}
-
-.action-btn {
-  font-size: 15px;
-  color: var(--ios-blue);
-  font-weight: 500;
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-
-.action-btn:active {
-  opacity: 0.6;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }

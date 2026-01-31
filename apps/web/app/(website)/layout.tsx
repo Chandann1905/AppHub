@@ -8,10 +8,13 @@ export default function WebsiteLayout({
     return (
         <div className="ios-page">
             <NavigationBar />
-            <main className="ios-container pt-4 md:pt-8 min-h-[80vh]">
+
+            {/* Scrollable Content Area */}
+            <main className="ios-container pt-4 md:pt-8">
                 {children}
+                <Footer />
             </main>
-            <Footer />
+
             <BottomTabBar />
         </div>
     );
