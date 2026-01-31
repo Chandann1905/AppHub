@@ -424,6 +424,93 @@ a {
   }
 }
 
+
+/* =========================================
+   ADMIN / TABLE STYLES (iOS List Style)
+   ========================================= */
+
+.admin-table-container {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--secondary-system-grouped-background);
+  margin-bottom: 24px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--secondary-system-grouped-background);
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--label-secondary);
+  text-transform: uppercase;
+  border-bottom: 0.5px solid var(--separator);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 14px 16px;
+  border-bottom: 0.5px solid var(--separator);
+  color: var(--label-primary);
+  font-size: 17px;
+  vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-published {
+  background-color: rgba(52, 199, 89, 0.15);
+  color: var(--ios-green);
+}
+
+.status-draft {
+  background-color: rgba(142, 142, 147, 0.15);
+  color: var(--ios-gray);
+}
+
+.status-archived {
+  background-color: rgba(255, 149, 0, 0.15);
+  color: var(--ios-orange);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  font-size: 15px;
+  color: var(--ios-blue);
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+
+.action-btn:active {
+  opacity: 0.6;
+}
+
 .animate-slide-up {
   animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
